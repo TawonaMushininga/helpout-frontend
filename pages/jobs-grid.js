@@ -1,7 +1,14 @@
+"use client";
 import Link from "next/link";
 import Layout from "../components/Layout/Layout";
 import Jobs from "../util/mock_data_jobs";
+import axios from "axios";
+import  {BackendUrl, Headers} from "../util/url";
+import { toast } from "react-toastify";
+import { useEffect, useState } from "react";
 export default function JobGrid() {
+
+    const [serverHeaders, setServerHeaders] = useState({})
 
     const randomLogos = [
         "assets/imgs/brands/brand-1.png",
@@ -23,6 +30,26 @@ export default function JobGrid() {
         const minutes = String(d.getMinutes()).padStart(2, '0');
         return `${d.getDate()} ${d.toLocaleString('default', { month: 'short' })} ${d.getFullYear()} | ${hours}:${minutes}`;
     }
+
+
+
+    const getJobs = async () => {
+        try {
+            const response = await axios.get(`${BackendUrl}/api/v1/jobs`, Headers[0] );
+            console.log(response.data);
+            toast.success("Jobs fetched successfully");
+        } catch (error) {
+            console.error(error);
+            toast.error("Failed to fetch jobs");
+        }
+    }
+
+    // use effect to navigate to sign in page if session storage is not defined
+    useEffect(() => {
+        getJobs();
+    }
+    , []);
+
 
     return (
         <>

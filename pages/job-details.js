@@ -1,3 +1,4 @@
+"use client";
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import Layout from "../components/Layout/Layout";
@@ -6,6 +7,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { getUserDetails } from "../util/userDetails";
+import { toast } from "react-toastify";
 
 import BackendUrl from "../util/url";
 
@@ -28,18 +30,22 @@ export default function JobDetails() {
         return `${d.getDate()} ${d.toLocaleString('default', { month: 'short' })} ${d.getFullYear()} | ${hours}:${minutes}`;
     }
 
+    const Headers = [
+        {
+            headers: {
+                "ngrok-skip-browser-warning": "69420",
+                "access-token": sessionStorage.getItem('access-token'),
+                "client": sessionStorage.getItem('client'),
+                "expiry": sessionStorage.getItem('expiry'),
+                "uid": sessionStorage.getItem('uid'),
+                "token-type": sessionStorage.getItem('token-type')
+            }
+        }
+    ]
+
     const fetchJobDetails = async () => {
         try {
-            const response = await axios.get(url, {
-                headers: {
-                    "ngrok-skip-browser-warning": "69420",
-                    "access-token": localStorage.getItem('access-token'),
-                    "client": localStorage.getItem('client'),
-                    "expiry": localStorage.getItem('expiry'),
-                    "uid": localStorage.getItem('uid'),
-                    "token-type": localStorage.getItem('token-type')
-                }
-            }
+            const response = await axios.get(url, Headers[0]
             );
             setJob(response.data);
             console.log(response.data);
@@ -47,6 +53,23 @@ export default function JobDetails() {
 
         } catch (error) {
             console.log(error);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    const applyJob = async () => {
+        try {
+            const response = await axios.post(`${BackendUrl}/api/v1/job_applications`, {
+                job_id: id
+            }, Headers[0]
+            );
+            console.log(response.data);
+            toast.success("Job Application Successful");
+
+        } catch (error) {
+            console.log(error);
+            toast.error("Job Application Failed");
         } finally {
             setLoading(false);
         }
@@ -80,9 +103,9 @@ export default function JobDetails() {
                                             <div className="col-lg-4 col-md-12 text-lg-end">
                                                 {
                                                     user && user.role === "employee" ? (
-                                                        <div className="btn btn-apply-icon btn-apply btn-apply-big hover-up" data-bs-toggle="modal" data-bs-target="#ModalApplyJobForm">
+                                                        <button onClick={()=>applyJob()} className="btn btn-apply-icon btn-apply btn-apply-big hover-up" data-bs-toggle="modal" data-bs-target="#ModalApplyJobForm">
                                                             Apply now
-                                                        </div>
+                                                        </button>
                                                     ) : (
                                                         <div className="btn btn-apply-icon btn-apply btn-apply-big hover-up" data-bs-toggle="modal" data-bs-target="#ModalApplyJobForm">
                                                             Edit Job

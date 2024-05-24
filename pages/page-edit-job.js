@@ -17,11 +17,11 @@ function EditJob() {
       const response = await axios.get(`${BackendUrl}/api/v1/jobs/9`, {
         headers: {
           "ngrok-skip-browser-warning": "69420",
-          "access-token": localStorage.getItem('access-token'),
-          "client": localStorage.getItem('client'),
-          "expiry": localStorage.getItem('expiry'),
-          "uid": localStorage.getItem('uid'),
-          "token-type": localStorage.getItem('token-type')
+          "access-token": sessionStorage.getItem('access-token'),
+          "client": sessionStorage.getItem('client'),
+          "expiry": sessionStorage.getItem('expiry'),
+          "uid": sessionStorage.getItem('uid'),
+          "token-type": sessionStorage.getItem('token-type')
         }
 
       });
@@ -68,11 +68,11 @@ function EditJob() {
 
         headers: {
           "ngrok-skip-browser-warning": "69420",
-          "access-token": localStorage.getItem('access-token'),
-          "client": localStorage.getItem('client'),
-          "expiry": localStorage.getItem('expiry'),
-          "uid": localStorage.getItem('uid'),
-          "token-type": localStorage.getItem('token-type')
+          "access-token": sessionStorage.getItem('access-token'),
+          "client": sessionStorage.getItem('client'),
+          "expiry": sessionStorage.getItem('expiry'),
+          "uid": sessionStorage.getItem('uid'),
+          "token-type": sessionStorage.getItem('token-type')
         }
       });
 

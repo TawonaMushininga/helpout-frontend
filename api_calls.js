@@ -3,11 +3,11 @@ import BackendUrl from '../util/url';
 
 // Create an Axios instance
 axios.interceptors.request.use(function (config) {
-    const token = localStorage.getItem('access-token');
-        const client = localStorage.getItem('client');
-        const expiry = localStorage.getItem('expiry');
-        const uid = localStorage.getItem('uid');
-        const token_type = localStorage.getItem('token-type');
+    const token = sessionStorage.getItem('access-token');
+        const client = sessionStorage.getItem('client');
+        const expiry = sessionStorage.getItem('expiry');
+        const uid = sessionStorage.getItem('uid');
+        const token_type = sessionStorage.getItem('token-type');
 
         console.log('Token: ', token)
 
@@ -35,11 +35,11 @@ axios.interceptors.response.use(function (response) {
         const token_type = response.headers['token-type'];
 
         if (token) {
-            localStorage.setItem('access-token', token);
-            localStorage.setItem('client', client);
-            localStorage.setItem('expiry', expiry);
-            localStorage.setItem('uid', uid);
-            localStorage.setItem('token-type', token_type);
+            sessionStorage.setItem('access-token', token);
+            sessionStorage.setItem('client', client);
+            sessionStorage.setItem('expiry', expiry);
+            sessionStorage.setItem('uid', uid);
+            sessionStorage.setItem('token-type', token_type);
         }
 
         return response;
@@ -75,11 +75,11 @@ const headers = {
   "Accept": "application/json",
   "Access-Control-Allow-Origin": "*",
   "ngrok-skip-browser-warning": "69420",
-  "access-token": localStorage.getItem('access-token'),
-  "client": localStorage.getItem('client'),
-  "expiry": localStorage.getItem('expiry'),
-  "uid": localStorage.getItem('uid'),
-  "token-type": localStorage.getItem('token-type')
+  "access-token": sessionStorage.getItem('access-token'),
+  "client": sessionStorage.getItem('client'),
+  "expiry": sessionStorage.getItem('expiry'),
+  "uid": sessionStorage.getItem('uid'),
+  "token-type": sessionStorage.getItem('token-type')
 }
 
 //  export the headers

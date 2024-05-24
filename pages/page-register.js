@@ -19,7 +19,7 @@ export default function Register() {
 
     //  function to store token in local storage
     const storeToken = (token) => {
-        localStorage.setItem("token", token);
+        sessionStorage.setItem("token", token);
     };
 
     const onSubmit = (data) => {

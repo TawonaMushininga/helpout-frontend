@@ -1,4 +1,5 @@
-﻿/* eslint-disable @next/next/no-html-link-for-pages */
+﻿"use client"
+/* eslint-disable @next/next/no-html-link-for-pages */
 
 import { useEffect, useState } from "react";
 
@@ -9,7 +10,7 @@ import { getUserDetails } from "../../util/userDetails";
 const Header = ({handleOpen,handleRemove,openClass}) => {
     const [scroll, setScroll] = useState(false);
     const [userDetails, setUserDetails] = useState({});
-    const { isAuthenticated } = typeof window !== "undefined" ? getUserDetails() : { isAuthenticated: false };
+    // const { isAuthenticated } = typeof window !== "undefined" ? getUserDetails() : { isAuthenticated: false };
 
     useEffect(() => {
         const handleScroll = () => {
@@ -21,11 +22,11 @@ const Header = ({handleOpen,handleRemove,openClass}) => {
         };
     }, []);
 
-    useEffect(() => {
-        if (isAuthenticated) {
-            setUserDetails(getUserDetails());
-        }
-    }, [isAuthenticated]);
+    // useEffect(() => {
+    //     if (isAuthenticated) {
+    //         setUserDetails(getUserDetails());
+    //     }
+    // }, [isAuthenticated]);
 
     return (
         <>
@@ -108,7 +109,7 @@ const Header = ({handleOpen,handleRemove,openClass}) => {
                         </div>
                         <div className="header-right">
                             <div className="block-signin">
-                                {
+                                {/* {
                                     isAuthenticated ? (
                                         <Link legacyBehavior href="/page-profile"><a className="text-link-bd-btom hover-up">Welcome, {userDetails.username}</a></Link>
                                     ) : (
@@ -117,7 +118,13 @@ const Header = ({handleOpen,handleRemove,openClass}) => {
                                             <Link legacyBehavior href="/page-register"><a className="text-link-bd-btom hover-up p-4">Register</a></Link>
                                         </>
                                     )
-                                }
+                                } */}
+
+
+<>
+                                            <Link legacyBehavior href="/page-signin"><a className="text-link-bd-btom hover-up bg-blue-500 p-4">Sign In</a></Link>
+                                            <Link legacyBehavior href="/page-register"><a className="text-link-bd-btom hover-up p-4">Register</a></Link>
+                                        </>
 
                             </div>
                         </div>

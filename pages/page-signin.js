@@ -20,11 +20,11 @@ export default function Signin() {
     // Request interceptor to add headers
     axios.interceptors.request.use(
         (config) => {
-            const token = localStorage.getItem('access-token');
-            const client = localStorage.getItem('client');
-            const expiry = localStorage.getItem('expiry');
-            const uid = localStorage.getItem('uid');
-            const token_type = localStorage.getItem('token-type');
+            const token = sessionStorage.getItem('access-token');
+            const client = sessionStorage.getItem('client');
+            const expiry = sessionStorage.getItem('expiry');
+            const uid = sessionStorage.getItem('uid');
+            const token_type = sessionStorage.getItem('token-type');
 
             config.headers['access-token'] = token;
             config.headers['client'] = client;
@@ -49,11 +49,11 @@ export default function Signin() {
             const uid = response.headers['uid'];
             const token_type = response.headers['token-type'];
 
-            localStorage.setItem('access-token', token);
-            localStorage.setItem('client', client);
-            localStorage.setItem('expiry', expiry);
-            localStorage.setItem('uid', uid);
-            localStorage.setItem('token-type', token_type);
+            sessionStorage.setItem('access-token', token);
+            sessionStorage.setItem('client', client);
+            sessionStorage.setItem('expiry', expiry);
+            sessionStorage.setItem('uid', uid);
+            sessionStorage.setItem('token-type', token_type);
 
             return response;
         },
@@ -74,14 +74,14 @@ export default function Signin() {
             .then((response) => {
                 console.log(response);
                 // save id to local storage
-                localStorage.setItem("user_id", response.data.data.id);
-                localStorage.setItem("first_name", response.data.data.first_name);
-                localStorage.setItem("last_name", response.data.data.last_name);
-                localStorage.setItem("email", response.data.data.email);
-                localStorage.setItem("username", response.data.data.username);
-                localStorage.setItem("user_role", response.data.data.role);
+                sessionStorage.setItem("user_id", response.data.data.id);
+                sessionStorage.setItem("first_name", response.data.data.first_name);
+                sessionStorage.setItem("last_name", response.data.data.last_name);
+                sessionStorage.setItem("email", response.data.data.email);
+                sessionStorage.setItem("username", response.data.data.username);
+                sessionStorage.setItem("user_role", response.data.data.role);
 
-                localStorage.setItem("isAuthenticated", true);
+                sessionStorage.setItem("isAuthenticated", true);
 
                 if (response.status === 200) {
                     toast.success("Login Successful", {
