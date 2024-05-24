@@ -30,39 +30,44 @@ export default function JobDetails() {
         return `${d.getDate()} ${d.toLocaleString('default', { month: 'short' })} ${d.getFullYear()} | ${hours}:${minutes}`;
     }
 
-    const Headers = [
+    const Headers = async () =>([
         {
             headers: {
                 "ngrok-skip-browser-warning": "69420",
-                "access-token": sessionStorage.getItem('access-token'),
-                "client": sessionStorage.getItem('client'),
-                "expiry": sessionStorage.getItem('expiry'),
-                "uid": sessionStorage.getItem('uid'),
-                "token-type": sessionStorage.getItem('token-type')
+                "access-token": await sessionStorage.getItem('access-token'),
+                "client": await sessionStorage.getItem('client'),
+                "expiry": await sessionStorage.getItem('expiry'),
+                "uid": await sessionStorage.getItem('uid'),
+                "token-type": await sessionStorage.getItem('token-type')
             }
         }
-    ]
+    ])
 
     const fetchJobDetails = async () => {
+        setLoading(true);
         try {
-            const response = await axios.get(url, Headers[0]
+            const response = await axios.get(url, headers[0]
             );
+            setLoading(false);
             setJob(response.data);
             console.log(response.data);
             setUser(getUserDetails());
 
         } catch (error) {
             console.log(error);
+            setLoading(false);
         } finally {
             setLoading(false);
         }
     }
 
     const applyJob = async () => {
+
+        let headers = await Headers();
         try {
             const response = await axios.post(`${BackendUrl}/api/v1/job_applications`, {
                 job_id: id
-            }, Headers[0]
+            }, headers[0]
             );
             console.log(response.data);
             toast.success("Job Application Successful");
