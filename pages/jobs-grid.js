@@ -3,12 +3,12 @@ import Link from "next/link";
 import Layout from "../components/Layout/Layout";
 import Jobs from "../util/mock_data_jobs";
 import axios from "axios";
-import  {BackendUrl, Headers} from "../util/url";
+import  BackendUrl from "../util/url";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 export default function JobGrid() {
 
-    const [serverHeaders, setServerHeaders] = useState({})
+    const [jobs, setJobs] = useState([]);
 
     const randomLogos = [
         "assets/imgs/brands/brand-1.png",
@@ -31,24 +31,45 @@ export default function JobGrid() {
         return `${d.getDate()} ${d.toLocaleString('default', { month: 'short' })} ${d.getFullYear()} | ${hours}:${minutes}`;
     }
 
+    const getHeaders = async () => {
+        const accessToken = await sessionStorage.getItem('access-token');
+        const client = await sessionStorage.getItem('client');
+        const expiry = await sessionStorage.getItem('expiry');
+        const uid = await sessionStorage.getItem('uid');
+        const tokenType = await sessionStorage.getItem('token-type');
+
+        console.log({ accessToken, client, expiry, uid, tokenType });
+
+        const headers = {
+            "ngrok-skip-browser-warning": "69420",
+            "access-token": accessToken,
+            "client": client,
+            "expiry": expiry,
+            "uid": uid,
+            "token-type": tokenType
+        };
+
+        return { headers };
+    };
 
 
     const getJobs = async () => {
         try {
-            const response = await axios.get(`${BackendUrl}/api/v1/jobs`, Headers[0] );
+            const headers = await getHeaders();
+            const response = await axios.get(`${BackendUrl}/api/v1/jobs`, headers);
             console.log(response.data);
+            setJobs(response.data);
             toast.success("Jobs fetched successfully");
         } catch (error) {
             console.error(error);
             toast.error("Failed to fetch jobs");
         }
-    }
+    };
 
-    // use effect to navigate to sign in page if session storage is not defined
+    // use effect to navigate to sign-in page if session storage is not defined
     useEffect(() => {
         getJobs();
-    }
-    , []);
+    }, []);
 
 
     return (
@@ -185,7 +206,7 @@ export default function JobGrid() {
                                         <div className="row">
 
                                             {
-                                                Jobs.map((job, index) => (
+                                                jobs.map((job, index) => (
                                                     <div key={index} className="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
                                                         <div className="card-grid-2 hover-up">
                                                             <div className="card-grid-2-image-left">
