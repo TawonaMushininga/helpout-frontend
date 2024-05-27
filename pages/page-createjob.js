@@ -10,83 +10,86 @@ function CreateJob() {
   const [loading, setLoading] = useState(false);
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
-  const onSubmit = (data) => {
-    // Handle form submission, e.g., send data to the backend
+  const onSubmit = async (data) => {
     console.log('Job Details:', data);
     setLoading(true);
 
-    const url = BackendUrl + "/api/v1/jobs";
+    const getHeaders = async () => {
+        const accessToken = await sessionStorage.getItem('access-token');
+        const client = await sessionStorage.getItem('client');
+        const expiry = await sessionStorage.getItem('expiry');
+        const uid = await sessionStorage.getItem('uid');
+        const tokenType = await sessionStorage.getItem('token-type');
+
+        console.log({ accessToken, client, expiry, uid, tokenType });
+
+        return {
+            "ngrok-skip-browser-warning": "69420",
+            "access-token": accessToken,
+            "client": client,
+            "expiry": expiry,
+            "uid": uid,
+            "token-type": tokenType,
+        };
+    };
+
+    const url = `${BackendUrl}/api/v1/jobs`;
 
     try {
-      axios.post(`${url}`,
-      {
-        title: data.title,
-        description: data.description,
-        location: data.location,
-        amount: data.amount,
-        job_type: data.job_type,
-        payment_type: data.payment_type,
-        region: data.region,
-        deadline: data.deadline,
-        experience: data.experience,
-        hours: data.hours,
-        date: data.date
-      },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "Access-Control-Allow-Origin": "*",
-            "Authorization": `Bearer ${Token}`,
-          }
-        }
-      )
-        .then((response) => {
-          console.log(response);
-          setLoading(false);
+        const headers = await getHeaders();
 
-          if (response.status === 200) {
+        const response = await axios.post(url, {
+            title: data.title,
+            description: data.description,
+            location: data.location,
+            amount: data.amount,
+            job_type: data.job_type,
+            payment_type: data.payment_type,
+            region: data.region,
+            deadline: data.deadline,
+            experience: data.experience,
+            hours: data.hours,
+            date: data.date
+        }, { headers });
+
+        console.log(response);
+        setLoading(false);
+
+        if (response.status === 200) {
             toast.success("Job Created Successfully", {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true
             });
             reset();  // Reset form after successful submission
             // window.location.href = "/page-dashboard";
-          } else {
+        } else {
             toast.error("Job Creation Failed", {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true
             });
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-          setLoading(false);
-          toast.error("Job Creation Failed", {
+        }
+    } catch (error) {
+        console.log(error);
+        setLoading(false);
+        toast.error("Job Creation Failed", {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
             draggable: true
-          });
         });
     }
-    catch (error) {
-      console.log(error);
-      setLoading(false);
-    }
+  }
 
-
-  };
 
   return (
     <>
