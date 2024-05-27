@@ -30,60 +30,69 @@ export default function JobDetails() {
         return `${d.getDate()} ${d.toLocaleString('default', { month: 'short' })} ${d.getFullYear()} | ${hours}:${minutes}`;
     }
 
-    const Headers = async () =>([
-        {
-            headers: {
-                "ngrok-skip-browser-warning": "69420",
-                "access-token": await sessionStorage.getItem('access-token'),
-                "client": await sessionStorage.getItem('client'),
-                "expiry": await sessionStorage.getItem('expiry'),
-                "uid": await sessionStorage.getItem('uid'),
-                "token-type": await sessionStorage.getItem('token-type')
-            }
+    const getHeaders = async () => {
+        const accessToken = sessionStorage.getItem('access-token');
+        const client = sessionStorage.getItem('client');
+        const expiry = sessionStorage.getItem('expiry');
+        const uid = sessionStorage.getItem('uid');
+        const tokenType = sessionStorage.getItem('token-type');
+
+        if (!accessToken || !client || !expiry || !uid || !tokenType) {
+            throw new Error('Missing required authentication headers');
         }
-    ])
+
+        const headers = {
+            "ngrok-skip-browser-warning": "69420",
+            "access-token": accessToken,
+            "client": client,
+            "expiry": expiry,
+            "uid": uid,
+            "token-type": tokenType
+        };
+
+        return headers;
+    };
 
     const fetchJobDetails = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(url, headers[0]
-            );
-            setLoading(false);
+            const headers = await getHeaders();
+            const response = await axios.get(url, { headers });
             setJob(response.data);
             console.log(response.data);
             setUser(getUserDetails());
-
         } catch (error) {
-            console.log(error);
-            setLoading(false);
+            console.error(error.response ? error.response.data : error.message);
         } finally {
             setLoading(false);
         }
-    }
+    };
 
     const applyJob = async () => {
+        setLoading(true); // Indicate the start of a loading state
 
-        let headers = await Headers();
         try {
-            const response = await axios.post(`${BackendUrl}/api/v1/job_applications`, {
-                job_id: id
-            }, headers[0]
+            const headers = await getHeaders();
+            const response = await axios.post(
+                `${BackendUrl}/api/v1/job_applications`,
+                { job_id: id },
+                { headers }
             );
             console.log(response.data);
             toast.success("Job Application Successful");
-
         } catch (error) {
-            console.log(error);
+            console.error(error.response ? error.response.data : error.message);
             toast.error("Job Application Failed");
         } finally {
-            setLoading(false);
+            setLoading(false); // Indicate the end of a loading state
         }
-    }
+    };
 
     useEffect(() => {
-        id && fetchJobDetails()
-    }, [id])
-
+        if (id) {
+            fetchJobDetails();
+        }
+    }, [id]);
 
     return (
         <>
@@ -101,7 +110,7 @@ export default function JobDetails() {
                                             <div className="col-lg-8 col-md-12">
                                                 <h3>{job.title}</h3>
                                                 <div className="mt-0 mb-15">
-                                                    <span className="card-briefcase">{job.payment_type}</span>
+                                                    <span className="card-briefcase">{job.status}</span>
                                                     <span className="card-time">{formatDate(job.created_at)}</span>
                                                 </div>
                                             </div>
