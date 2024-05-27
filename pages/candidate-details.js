@@ -23,9 +23,9 @@ export default function CandidateDetails() {
                             <div className="row mt-10">
                                 <div className="col-lg-8 col-md-12">
                                     <h5 className="f-18">
-                                        Steven Jobs <span className="card-location font-regular ml-20">New York, US</span>
+                                        Eroni Masiki <span className="card-location font-regular ml-20">Gweru, ZW</span>
                                     </h5>
-                                    <p className="mt-0 font-md color-text-paragraph-2 mb-15">UI/UX Designer. Front end Developer</p>
+                                    <p className="mt-0 font-md color-text-paragraph-2 mb-15">Plumber</p>
                                     <div className="mt-10 mb-15">
                                         <img src="assets/imgs/template/icons/star.svg" alt="jobbox" />
                                         <img src="assets/imgs/template/icons/star.svg" alt="jobbox" />
@@ -75,102 +75,36 @@ export default function CandidateDetails() {
                                             <h4>About Me</h4>
                                             <p>Hello there! My name is Alan Walker. I am a graphic designer, and I’m very passionate and dedicated to my work. With 20 years experience as a professional a graphic designer, I have acquired the skills and knowledge necessary to make your project a success.</p>
                                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis illum fuga eveniet. Deleniti asperiores, commodi quae ipsum quas est itaque, ipsa, dolore beatae voluptates nemo blanditiis iste eius officia minus. Id nisi, consequuntur sunt impedit quidem, vitae mollitia!</p>
-                                            <h4>Professional Skills</h4>
-                                            <div className="row mb-40">
-                                                <div className="col-lg-6 col-md-6 col-sm-12 mb-30">
-                                                    <h6 className="color-text-paragraph-2">Programming</h6>
-                                                    <div className="box-progress-bar mt-20">
-                                                        <p className="font-xs color-text-paragraph-2 mb-10">HTML &amp; CSS</p>
-                                                        <div className="progress">
-                                                            <div className="progress-bar bg-paragraph-2" role="progressbar" style={{ width: "78%" }} aria-valuenow={25} aria-valuemin={0} aria-valuemax={100}>
-                                                                <span>78%</span>
-                                                            </div>
-                                                        </div>
-                                                        <p className="font-xs color-text-paragraph-2 mb-10 mt-30">Javascript</p>
-                                                        <div className="progress">
-                                                            <div className="progress-bar bg-brand-2" role="progressbar" style={{ width: "88%" }} aria-valuenow={50} aria-valuemin={0} aria-valuemax={100}>
-                                                                <span>88%</span>
-                                                            </div>
-                                                        </div>
-                                                        <p className="font-xs color-text-paragraph-2 mb-10 mt-30">Database</p>
-                                                        <div className="progress">
-                                                            <div className="progress-bar bg-paragraph-2" role="progressbar" style={{ width: "62%" }} aria-valuenow={75} aria-valuemin={0} aria-valuemax={100}>
-                                                                <span>62%</span>
-                                                            </div>
-                                                        </div>
-                                                        <p className="font-xs color-text-paragraph-2 mb-10 mt-30">React JS</p>
-                                                        <div className="progress">
-                                                            <div className="progress-bar bg-paragraph-2" role="progressbar" style={{ width: "92%" }} aria-valuenow={100} aria-valuemin={0} aria-valuemax={100}>
-                                                                <span>92%</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="col-lg-6 col-md-6 col-sm-12 mb-30">
-                                                    <h6 className="color-text-paragraph-2">Design</h6>
-                                                    <div className="box-progress-bar mt-20">
-                                                        <p className="font-xs color-text-paragraph-2 mb-10">Photoshop</p>
-                                                        <div className="progress">
-                                                            <div className="progress-bar bg-paragraph-2" role="progressbar" style={{ width: "29%" }} aria-valuenow={25} aria-valuemin={0} aria-valuemax={100}>
-                                                                <span>29%</span>
-                                                            </div>
-                                                        </div>
-                                                        <p className="font-xs color-text-paragraph-2 mb-10 mt-30">Figma</p>
-                                                        <div className="progress">
-                                                            <div className="progress-bar bg-paragraph-2" role="progressbar" style={{ width: "20%" }} aria-valuenow={50} aria-valuemin={0} aria-valuemax={100}>
-                                                                <span>20%</span>
-                                                            </div>
-                                                        </div>
-                                                        <p className="font-xs color-text-paragraph-2 mb-10 mt-30">Illustrator</p>
-                                                        <div className="progress">
-                                                            <div className="progress-bar bg-paragraph-2" role="progressbar" style={{ width: "65%" }} aria-valuenow={75} aria-valuemin={0} aria-valuemax={100}>
-                                                                <span>65%</span>
-                                                            </div>
-                                                        </div>
-                                                        <p className="font-xs color-text-paragraph-2 mb-10 mt-30">Sketch</p>
-                                                        <div className="progress">
-                                                            <div className="progress-bar bg-paragraph-2" role="progressbar" style={{ width: "82%" }} aria-valuenow={100} aria-valuemin={0} aria-valuemax={100}>
-                                                                <span>82%</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <p />
-                                            <h4>Work Experience</h4>
+
+                                            <h4>Work Experience for Plumber</h4>
                                             <ul>
-                                                <li>A portfolio demonstrating well thought through and polished end to end customer journeys</li>
-                                                <li>5+ years of industry experience in interactive design and / or visual design</li>
-                                                <li>Excellent interpersonal skills</li>
-                                                <li>Aware of trends in mobile, communications, and collaboration</li>
-                                                <li>Ability to create highly polished design prototypes, mockups, and other communication artifacts</li>
-                                                <li>The ability to scope and estimate efforts accurately and prioritize tasks and goals independently</li>
-                                                <li>History of impacting shipping products with your work</li>
-                                                <li>A Bachelor’s Degree in Design (or related field) or equivalent professional experience</li>
-                                                <li>Proficiency in a variety of design tools such as Figma, Photoshop, Illustrator, and Sketch</li>
+                                                <li>
+                                                    Worked as a Plumber for 5 years at XYZ Company
+                                                </li>
+                                                <li>
+                                                    Worked as a Plumber for 5 years at ABC Company
+                                                </li>
+                                                <li>
+                                                    I know how to fix a leaky faucet
+                                                </li>
+                                                <li>
+                                                    I know how to fix a leaky pipe
+                                                </li>
                                             </ul>
-                                            <h4>Education</h4>
-                                            <ul>
-                                                <li>Necessitatibus quibusdam facilis</li>
-                                                <li>Velit unde aliquam et voluptas reiciendis non sapiente labore</li>
-                                                <li>Commodi quae ipsum quas est itaque</li>
-                                                <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit</li>
-                                                <li>Deleniti asperiores blanditiis nihil quia officiis dolor</li>
-                                            </ul>
+
                                         </div>
                                         <div className={`tab-pane fade ${activeIndex === 2 && "show active"}`}>
                                             <h4>Skills</h4>
-                                            <p />
-                                            Hello there! My name is Alan Walker. I am a graphic designer, and I’m very passionate and dedicated to my work. With 20 years experience as a professional a graphic designer, I have acquired the skills and knowledge necessary to make your project a success.
-                                            <p />
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis illum fuga eveniet. Deleniti asperiores, commodi quae ipsum quas est itaque, ipsa, dolore beatae voluptates nemo blanditiis iste eius officia minus. Id nisi, consequuntur sunt impedit quidem, vitae mollitia!
+                                            <p>
+                                                My skills in Plumbing are unmatched. I have been in the industry for over 12 years and have worked on a variety of projects. I have a Master's Degree in Plumbing and have worked with some of the best companies in the industry. I am confident that I can handle any project that comes my way.
+                                            </p>
+
                                         </div>
                                         <div className={`tab-pane fade ${activeIndex === 3 && "show active"}`}>
                                             <h4>Work Experiences</h4>
-                                            <p />
-                                            Hello there! My name is Alan Walker. I am a graphic designer, and I’m very passionate and dedicated to my work. With 20 years experience as a professional a graphic designer, I have acquired the skills and knowledge necessary to make your project a success.
-                                            <p />
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis illum fuga eveniet. Deleniti asperiores, commodi quae ipsum quas est itaque, ipsa, dolore beatae voluptates nemo blanditiis iste eius officia minus. Id nisi, consequuntur sunt impedit quidem, vitae mollitia!
+                                            <p>
+                                                My work experience is extensive. I have worked with some of the best companies in the industry and have handled a variety of projects. I have a Master's Degree in Plumbing and have been in the industry for over 12 years. I am confident that I can handle any project that comes my way.
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -421,20 +355,11 @@ export default function CandidateDetails() {
                                             </li>
                                             <li>
                                                 <div className="sidebar-icon-item">
-                                                    <i className="fi-rr-dollar" />
-                                                </div>
-                                                <div className="sidebar-text-info">
-                                                    <span className="text-description">Expected Salary</span>
-                                                    <strong className="small-heading">$26k - $30k</strong>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div className="sidebar-icon-item">
                                                     <i className="fi-rr-marker" />
                                                 </div>
                                                 <div className="sidebar-text-info">
                                                     <span className="text-description">Language</span>
-                                                    <strong className="small-heading">English, German</strong>
+                                                    <strong className="small-heading">English, Shona</strong>
                                                 </div>
                                             </li>
                                             <li>
@@ -454,23 +379,9 @@ export default function CandidateDetails() {
                                             <li>Phone: (123) 456-7890</li>
                                             <li>Email: contact@Evara.com</li>
                                         </ul>
-                                        <div className="mt-30">
-                                            <Link legacyBehavior href="page-contact">
-                                                <a className="btn btn-send-message">Send Message</a>
-                                            </Link>
-                                        </div>
                                     </div>
                                 </div>
-                                <div className="sidebar-border-bg bg-right">
-                                    <span className="text-grey">WE ARE</span>
-                                    <span className="text-hiring">HIRING</span>
-                                    <p className="font-xxs color-text-paragraph mt-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae architecto</p>
-                                    <div className="mt-15">
-                                        <Link legacyBehavior href="#">
-                                            <a className="btn btn-paragraph-2">Know More</a>
-                                        </Link>
-                                    </div>
-                                </div>
+
                             </div>
                         </div>
                     </div>
