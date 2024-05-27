@@ -53,10 +53,10 @@ const Header = ({handleOpen,handleRemove,openClass}) => {
 
                                     </li>
 
-                                    <li className="has-children">
-                                        <Link legacyBehavior href="/blog-grid"><a>More</a></Link>
+                                    <li className="">
+                                        <Link legacyBehavior href="/candidate-details"><a>Profile</a></Link>
 
-                                        <ul className="sub-menu">
+                                        {/* <ul className="sub-menu">
                                             <li>
                                                 <Link legacyBehavior href="/page-about"><a>About Us</a></Link>
                                             </li>
@@ -81,7 +81,7 @@ const Header = ({handleOpen,handleRemove,openClass}) => {
                                             <li>
                                                 <Link legacyBehavior href="/page-createjob"><a>Create Job</a></Link>
                                             </li>
-                                        </ul>
+                                        </ul> */}
                                     </li>
                                     {/* <li className="has-children">
                                         <Link legacyBehavior href="/blog-grid"><a>Blog</a></Link>
