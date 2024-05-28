@@ -38,7 +38,7 @@ export default function JobGrid() {
         const uid = await sessionStorage.getItem('uid');
         const tokenType = await sessionStorage.getItem('token-type');
 
-        console.log({ accessToken, client, expiry, uid, tokenType });
+        // console.log({ accessToken, client, expiry, uid, tokenType });
 
         const headers = {
             "ngrok-skip-browser-warning": "69420",
@@ -57,7 +57,7 @@ export default function JobGrid() {
         try {
             const headers = await getHeaders();
             const response = await axios.get(`${BackendUrl}/api/v1/jobs`, headers);
-            console.log(response.data);
+            // console.log(response.data);
             setJobs(response.data);
             toast.success("Jobs fetched successfully");
         } catch (error) {
