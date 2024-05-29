@@ -317,29 +317,6 @@ export default function Index4() {
                             </div>
                         </div>
                     </section>
-                    <section className="section-box mt-50 mb-20">
-                        <div className="box-newsletter box-newsletter-2">
-                            <div className="container">
-                                <div className="row">
-                                    <div className="col-xl-4 col-12 text-center d-none d-xl-block">
-                                        <img src="assets/imgs/page/homepage4/img-newsletter.png" alt="joxBox" />
-                                    </div>
-                                    <div className="col-xl-8 col-lg-12 col-12 text-center">
-                                        <div className="d-inline-block text-start">
-                                            <h2 className="color-white">Subscribe our newsletter</h2>
-                                            <p className="mt-10 font-lg color-white">New Things Will Always Update Regularl</p>
-                                            <div className="box-form-newsletter mt-40">
-                                                <form className="form-newsletter">
-                                                    <input className="input-newsletter" type="text" placeholder="Enter your email here" />
-                                                    <button className="btn btn-default font-heading icon-send-letter">Subscribe</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
                 </div>
             </Layout>
         </>
