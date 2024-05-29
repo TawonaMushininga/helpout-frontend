@@ -92,8 +92,8 @@ export default function CandidateDetails() {
                                     </div>
                                 </div>
                                 <div className="col-lg-4 col-md-12 text-lg-end">
-                                    <Link legacyBehavior href="page-contact">
-                                        <a className="btn btn-download-icon btn-apply btn-apply-big">Download CV</a>
+                                    <Link legacyBehavior href="candidate-profile">
+                                        <a className="btn btn-download-icon btn-apply btn-apply-big">Edit Profile</a>
                                     </Link>
                                 </div>
                             </div>

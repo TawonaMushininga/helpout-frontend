@@ -1,13 +1,98 @@
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../components/Layout/Layout";
-
+import axios from "axios";
+import { toast } from "react-toastify";
+import BackendUrl from "../util/url";
+import { getUserDetails } from "../util/userDetails";
 export default function CandidateProfile() {
     const [activeIndex, setActiveIndex] = useState(1);
+    const [userDetails, setUserDetails] = useState({});
+    const [isAuth, setIsAuth] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [jobApplications, setJobApplications] = useState([]);
+
+    const getHeaders = async () => {
+        const accessToken = sessionStorage.getItem('access-token');
+        const client = sessionStorage.getItem('client');
+        const expiry = sessionStorage.getItem('expiry');
+        const uid = sessionStorage.getItem('uid');
+        const tokenType = sessionStorage.getItem('token-type');
+
+        if (!accessToken || !client || !expiry || !uid || !tokenType) {
+            throw new Error('Missing required authentication headers');
+        }
+
+        const headers = {
+            "ngrok-skip-browser-warning": "69420",
+            "access-token": accessToken,
+            "client": client,
+            "expiry": expiry,
+            "uid": uid,
+            "token-type": tokenType
+        };
+
+        return headers;
+    };
+
+    const isAuthenticated = async () => {
+        const accessToken = await sessionStorage.getItem('access-token');
+        if (accessToken !== null) {
+            // console.log('authenticated');
+            return true;
+        }
+        // console.log('not authenticated');
+        return false;
+    }
 
     const handleOnClick = (index) => {
         setActiveIndex(index); // remove the curly braces
     };
+
+    console.log(userDetails);
+
+    const getJobApplications = async () => {
+        setLoading(true);
+        try {
+            const headers = await getHeaders();
+            const response = await axios.get(
+                `${BackendUrl}/api/v1/job_applications`,
+                { headers }
+            );
+            setJobApplications(response.data);
+            toast.success("Job Application Successful");
+        } catch (error) {
+            console.error(error.response ? error.response.data : error.message);
+            toast.error("Job Application Failed");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        getJobApplications();
+    }
+        , []);
+
+
+
+    useEffect(() => {
+        const checkAuth = async () => {
+            const auth = await isAuthenticated();
+            setIsAuth(auth);
+        };
+
+        checkAuth();
+    }, []);
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            setUserDetails(getUserDetails());
+        }
+    }, [isAuth]);
+
+
+
     return (
         <>
             <Layout>
@@ -51,15 +136,22 @@ export default function CandidateProfile() {
                                                 </a>
                                             </li>
                                             <li>
-                                                <a className="btn btn-border recruitment-icon mb-20" onClick={() => handleOnClick(2)}>
+                                                <button className="btn btn-border recruitment-icon mb-20" onClick={() => handleOnClick(2)}
+                                                    disabled={!(isAuth === true && ["employee", "admin"].includes(userDetails.role) && userDetails.role !== "")} >
                                                     My Jobs
-                                                </a>
+                                                </button>
                                             </li>
+
                                             <li>
-                                                <a className="btn btn-border people-icon mb-20" onClick={() => handleOnClick(3)}>
-                                                    Saved Jobs
-                                                </a>
+                                                <button
+                                                    className="btn btn-border people-icon mb-20"
+                                                    onClick={() => handleOnClick(3)}
+                                                    disabled={!(isAuth === true && !["employee", "admin"].includes(userDetails.role) && userDetails.role !== "")}                                                    >
+                                                    Posted Jobs
+                                                </button>
                                             </li>
+
+
                                         </ul>
                                         <div className="border-bottom pt-10 pb-10" />
                                         <div className="mt-20 mb-20">
@@ -215,292 +307,46 @@ export default function CandidateProfile() {
                                             </div>
                                             <div className={`tab-pane fade ${activeIndex === 2 && "show active"}`}>
                                                 <h3 className="mt-0 color-brand-1 mb-50">My Jobs</h3>
-                                                <div className="row display-list">
-                                                    <div className="col-xl-12 col-12">
-                                                        <div className="card-grid-2 hover-up">
-                                                            <span className="flash" />
-                                                            <div className="row">
-                                                                <div className="col-lg-6 col-md-6 col-sm-12">
-                                                                    <div className="card-grid-2-image-left">
-                                                                        <div className="image-box">
-                                                                            <img src="assets/imgs/brands/brand-5.png" alt="jobBox" />
-                                                                        </div>
-                                                                        <div className="right-info">
-                                                                            <Link legacyBehavior href="#">
-                                                                                <a className="name-job">Linkedin</a>
-                                                                            </Link>
-                                                                            <span className="location-small">New York, US</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div className="col-lg-6 text-start text-md-end pr-60 col-md-6 col-sm-12">
-                                                                    <div className="pl-15 mb-15 mt-30">
-                                                                        <Link legacyBehavior href="#">
-                                                                            <a className="btn btn-grey-small mr-5">Adobe XD</a>
-                                                                        </Link>
+                                                <section className="section-box-2">
+                                                    <div className="container">
 
-                                                                        <Link legacyBehavior href="#">
-                                                                            <a className="btn btn-grey-small mr-5">Figma</a>
-                                                                        </Link>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="card-block-info">
-                                                                <h4>
-                                                                    <Link legacyBehavior href="/job-details">
-                                                                        <a>React Native Web Developer</a>
-                                                                    </Link>
-                                                                </h4>
-                                                                <div className="mt-5">
-                                                                    <span className="card-briefcase">Fulltime</span>
-                                                                    <span className="card-time">
-                                                                        <span>4</span>
-                                                                        <span> mins ago</span>
-                                                                    </span>
-                                                                </div>
-                                                                <p className="font-sm color-text-paragraph mt-10">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae architecto eveniet, dolor quo repellendus pariatur</p>
-                                                                <div className="card-2-bottom mt-20">
-                                                                    <div className="row">
-                                                                        <div className="col-lg-7 col-7">
-                                                                            <span className="card-text-price">$500</span>
-                                                                            <span className="text-muted">/Hour</span>
+                                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                                                            {jobApplications.map((jobApplication, index) => (
+                                                                <div key={index} className="job-application-card">
+                                                                    <div style={{ backgroundColor: '#FBFFF1', padding: '16px', borderRadius: '12px', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)' }}>
+                                                                        <div style={{ marginBottom: '8px', display: 'flex', justifyContent: 'space-between' }}>
+                                                                            <span style={{ fontWeight: 'bold' }}>
+                                                                                <i className="material-icons">Description</i> Job Title:
+                                                                            </span>
+                                                                            {jobApplication.job.title}
                                                                         </div>
-                                                                        <div className="col-lg-5 col-5 text-end">
-                                                                            <div className="btn btn-apply-now" data-bs-toggle="modal" data-bs-target="#ModalApplyJobForm">
-                                                                                Apply now
-                                                                            </div>
+                                                                        <div style={{ marginBottom: '8px', display: 'flex', justifyContent: 'space-between' }}>
+                                                                            <span style={{ fontWeight: 'bold' }}>
+                                                                                <i className="material-icons">Place</i> Location:
+                                                                            </span>
+                                                                            {jobApplication.job.location}
+                                                                        </div>
+                                                                        {/* similar for other details */}
+                                                                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                                                            <span style={{ fontWeight: 'bold' }}>
+                                                                                Status:
+                                                                            </span>
+                                                                            <span style={{ color: jobApplication.status === 'Approved' ? 'green' : jobApplication.status === 'Rejected' ? 'red' : 'black', fontWeight: 'Bold' }}>
+                                                                                {jobApplication.status}
+                                                                            </span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            ))}
                                                         </div>
-                                                    </div>
-                                                    <div className="col-xl-12 col-12">
-                                                        <div className="card-grid-2 hover-up">
-                                                            <span className="flash" />
-                                                            <div className="row">
-                                                                <div className="col-lg-6 col-md-6 col-sm-12">
-                                                                    <div className="card-grid-2-image-left">
-                                                                        <div className="image-box">
-                                                                            <img src="assets/imgs/brands/brand-6.png" alt="jobBox" />
-                                                                        </div>
-                                                                        <div className="right-info">
-                                                                            <Link legacyBehavior href="#">
-                                                                                <a className="name-job">Quora JSC</a>
-                                                                            </Link>
-                                                                            <span className="location-small">New York, US</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div className="col-lg-6 text-start text-md-end pr-60 col-md-6 col-sm-12">
-                                                                    <div className="pl-15 mb-15 mt-30">
-                                                                        <Link legacyBehavior href="#">
-                                                                            <a className="btn btn-grey-small mr-5">Adobe XD</a>
-                                                                        </Link>
 
-                                                                        <Link legacyBehavior href="#">
-                                                                            <a className="btn btn-grey-small mr-5">Figma</a>
-                                                                        </Link>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="card-block-info">
-                                                                <h4>
-                                                                    <Link legacyBehavior href="/job-details">
-                                                                        <a>Senior System Engineer</a>
-                                                                    </Link>
-                                                                </h4>
-                                                                <div className="mt-5">
-                                                                    <span className="card-briefcase">Part time</span>
-                                                                    <span className="card-time">
-                                                                        <span>5</span>
-                                                                        <span> mins ago</span>
-                                                                    </span>
-                                                                </div>
-                                                                <p className="font-sm color-text-paragraph mt-10">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae architecto eveniet, dolor quo repellendus pariatur.</p>
-                                                                <div className="card-2-bottom mt-20">
-                                                                    <div className="row">
-                                                                        <div className="col-lg-7 col-7">
-                                                                            <span className="card-text-price">$800</span>
-                                                                            <span className="text-muted">/Hour</span>
-                                                                        </div>
-                                                                        <div className="col-lg-5 col-5 text-end">
-                                                                            <div className="btn btn-apply-now" data-bs-toggle="modal" data-bs-target="#ModalApplyJobForm">
-                                                                                Apply now
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-xl-12 col-12">
-                                                        <div className="card-grid-2 hover-up">
-                                                            <span className="flash" />
-                                                            <div className="row">
-                                                                <div className="col-lg-6 col-md-6 col-sm-12">
-                                                                    <div className="card-grid-2-image-left">
-                                                                        <div className="image-box">
-                                                                            <img src="assets/imgs/brands/brand-7.png" alt="jobBox" />
-                                                                        </div>
-                                                                        <div className="right-info">
-                                                                            <Link legacyBehavior href="#">
-                                                                                <a className="name-job">Nintendo</a>
-                                                                            </Link>
-                                                                            <span className="location-small">New York, US</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div className="col-lg-6 text-start text-md-end pr-60 col-md-6 col-sm-12">
-                                                                    <div className="pl-15 mb-15 mt-30">
-                                                                        <Link legacyBehavior href="#">
-                                                                            <a className="btn btn-grey-small mr-5">Adobe XD</a>
-                                                                        </Link>
 
-                                                                        <Link legacyBehavior href="#">
-                                                                            <a className="btn btn-grey-small mr-5">Figma</a>
-                                                                        </Link>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="card-block-info">
-                                                                <h4>
-                                                                    <Link legacyBehavior href="/job-details">
-                                                                        <a>Products Manager</a>
-                                                                    </Link>
-                                                                </h4>
-                                                                <div className="mt-5">
-                                                                    <span className="card-briefcase">Full time</span>
-                                                                    <span className="card-time">
-                                                                        <span>6</span>
-                                                                        <span> mins ago</span>
-                                                                    </span>
-                                                                </div>
-                                                                <p className="font-sm color-text-paragraph mt-10">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae architecto eveniet, dolor quo repellendus pariatur.</p>
-                                                                <div className="card-2-bottom mt-20">
-                                                                    <div className="row">
-                                                                        <div className="col-lg-7 col-7">
-                                                                            <span className="card-text-price">$250</span>
-                                                                            <span className="text-muted">/Hour</span>
-                                                                        </div>
-                                                                        <div className="col-lg-5 col-5 text-end">
-                                                                            <div className="btn btn-apply-now" data-bs-toggle="modal" data-bs-target="#ModalApplyJobForm">
-                                                                                Apply now
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-xl-12 col-12">
-                                                        <div className="card-grid-2 hover-up">
-                                                            <span className="flash" />
-                                                            <div className="row">
-                                                                <div className="col-lg-6 col-md-6 col-sm-12">
-                                                                    <div className="card-grid-2-image-left">
-                                                                        <div className="image-box">
-                                                                            <img src="assets/imgs/brands/brand-8.png" alt="jobBox" />
-                                                                        </div>
-                                                                        <div className="right-info">
-                                                                            <Link legacyBehavior href="#">
-                                                                                <a className="name-job">Periscope</a>
-                                                                            </Link>
-                                                                            <span className="location-small">New York, US</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div className="col-lg-6 text-start text-md-end pr-60 col-md-6 col-sm-12">
-                                                                    <div className="pl-15 mb-15 mt-30">
-                                                                        <Link legacyBehavior href="#">
-                                                                            <a className="btn btn-grey-small mr-5">Adobe XD</a>
-                                                                        </Link>
 
-                                                                        <Link legacyBehavior href="#">
-                                                                            <a className="btn btn-grey-small mr-5">Figma</a>
-                                                                        </Link>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="card-block-info">
-                                                                <h4>
-                                                                    <Link legacyBehavior href="/job-details">
-                                                                        <a>Lead Quality Control QA</a>
-                                                                    </Link>
-                                                                </h4>
-                                                                <div className="mt-5">
-                                                                    <span className="card-briefcase">Full time</span>
-                                                                    <span className="card-time">
-                                                                        <span>6</span>
-                                                                        <span> mins ago</span>
-                                                                    </span>
-                                                                </div>
-                                                                <p className="font-sm color-text-paragraph mt-10">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae architecto eveniet, dolor quo repellendus pariatur.</p>
-                                                                <div className="card-2-bottom mt-20">
-                                                                    <div className="row">
-                                                                        <div className="col-lg-7 col-7">
-                                                                            <span className="card-text-price">$250</span>
-                                                                            <span className="text-muted">/Hour</span>
-                                                                        </div>
-                                                                        <div className="col-lg-5 col-5 text-end">
-                                                                            <div className="btn btn-apply-now" data-bs-toggle="modal" data-bs-target="#ModalApplyJobForm">
-                                                                                Apply now
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div className="paginations">
-                                                    <ul className="pager">
-                                                        <li>
-                                                            <a className="pager-prev" href="#" />
-                                                        </li>
-                                                        <li>
-                                                            <Link legacyBehavior href="#">
-                                                                <a className="pager-number">1</a>
-                                                            </Link>
-                                                        </li>
-                                                        <li>
-                                                            <Link legacyBehavior href="#">
-                                                                <a className="pager-number">2</a>
-                                                            </Link>
-                                                        </li>
-                                                        <li>
-                                                            <Link legacyBehavior href="#">
-                                                                <a className="pager-number">3</a>
-                                                            </Link>
-                                                        </li>
-                                                        <li>
-                                                            <Link legacyBehavior href="#">
-                                                                <a className="pager-number">4</a>
-                                                            </Link>
-                                                        </li>
-                                                        <li>
-                                                            <Link legacyBehavior href="#">
-                                                                <a className="pager-number">5</a>
-                                                            </Link>
-                                                        </li>
-                                                        <li>
-                                                            <Link legacyBehavior href="#">
-                                                                <a className="pager-number active">6</a>
-                                                            </Link>
-                                                        </li>
-                                                        <li>
-                                                            <Link legacyBehavior href="#">
-                                                                <a className="pager-number">7</a>
-                                                            </Link>
-                                                        </li>
-                                                        <li>
-                                                            <a className="pager-next" href="#" />
-                                                        </li>
-                                                    </ul>
-                                                </div>
+                                                </section>
                                             </div>
                                             <div className={`tab-pane fade ${activeIndex === 3 && "show active"}`}>
-                                                <h3 className="mt-0 color-brand-1 mb-50">Saved Jobs</h3>
+                                                <h3 className="mt-0 color-brand-1 mb-50">Posted Jobs</h3>
                                                 <div className="row">
                                                     <div className="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
                                                         <div className="card-grid-2 hover-up">
