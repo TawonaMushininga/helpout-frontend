@@ -8,13 +8,15 @@ import { useRouter } from 'next/router'
 function EditJob() {
   const [loading, setLoading] = useState(false);
   const [jobDetails, setJobDetails] = useState(null);
+
+
   const router = useRouter()
   const { id } = router.query
   const { register, handleSubmit, formState: { errors }, setValue } = useForm();
 
   const fetchJobDetails = async () => {
     try {
-      const response = await axios.get(`${BackendUrl}/api/v1/jobs/9`, {
+      const response = await axios.get(`${BackendUrl}/api/v1/jobs/${id}`, {
         headers: {
           "ngrok-skip-browser-warning": "69420",
           "access-token": sessionStorage.getItem('access-token'),
@@ -58,6 +60,7 @@ function EditJob() {
 
     fetchJobDetails();
   }, [id, setValue]);
+
 
   const onSubmit = async (data) => {
     setLoading(true);
@@ -179,6 +182,16 @@ function EditJob() {
                       {...register('amount', { required: true })}
                     />
                     {errors.amount && <span className="invalid-feedback">This field is required</span>}
+                  </div>
+                  <div className="form-group mb-3">
+                    <label htmlFor="amount">Max Applicants</label>
+                    <input
+                      type="number"
+                      className={`form-control ${errors.max_applicants ? 'is-invalid' : ''}`}
+                      id="amount"
+                      {...register('amount', { required: true })}
+                    />
+                    {errors.max_applicants && <span className="invalid-feedback">This field is required</span>}
                   </div>
                   <div className="form-group mb-3">
                     <label htmlFor="payment_type">Payment Type</label>

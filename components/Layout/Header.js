@@ -140,7 +140,7 @@ const Header = ({ handleOpen, handleRemove, openClass }) => {
                                         isAuth === true && userDetails.role !== "employee" && userDetails.role !== "" && (
                                             <li>
                                                 <Link legacyBehavior href="/page-createjob">
-                                                    <a>Create Job {userDetails.role}</a>
+                                                    <a>Create Job </a>
                                                 </Link>
                                             </li>
                                         )

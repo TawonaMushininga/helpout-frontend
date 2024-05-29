@@ -3,13 +3,27 @@ import Link from "next/link";
 import Layout from "../components/Layout/Layout";
 import Jobs from "../util/mock_data_jobs";
 import axios from "axios";
-import  BackendUrl from "../util/url";
+import BackendUrl from "../util/url";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import PageHead from "../components/Layout/PageHead"
+import { getUserDetails } from "../util/userDetails";
 export default function JobGrid() {
 
     const [jobs, setJobs] = useState([]);
+    const [userDetails, setUserDetails] = useState({});
+    const [isAuth, setIsAuth] = useState(false);
+
+    const isAuthenticated = async () => {
+        const accessToken = await sessionStorage.getItem('access-token');
+        if (accessToken !== null) {
+            // console.log('authenticated');
+            return true;
+        }
+        // console.log('not authenticated');
+        return false;
+    }
+
 
     const randomLogos = [
         "assets/imgs/brands/brand-1.png",
@@ -71,6 +85,21 @@ export default function JobGrid() {
     useEffect(() => {
         getJobs();
     }, []);
+
+    useEffect(() => {
+        const checkAuth = async () => {
+            const auth = await isAuthenticated();
+            setIsAuth(auth);
+        };
+
+        checkAuth();
+    }, []);
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            setUserDetails(getUserDetails());
+        }
+    }, [isAuth]);
 
 
     return (
@@ -165,14 +194,30 @@ export default function JobGrid() {
                                                                             <span className="text-muted">/ {job.payment_type}</span>
                                                                         </div>
                                                                         <div className="col-lg-5 col-5 text-end">
-                                                                            <Link legacyBehavior
-                                                                            href={{
-                                                                                pathname: '/job-details',
-                                                                                query: { id: job.id },
-                                                                              }}
-                                                                              >
-                                                                                <a className="btn btn-apply-now">Apply Now</a>
-                                                                            </Link>
+                                                                            {
+                                                                                isAuth === true && userDetails.role === "employee" && userDetails.role !== "" ? (
+                                                                                    <Link legacyBehavior
+                                                                                        href={{
+                                                                                            pathname: '/job-details',
+                                                                                            query: { id: job.id },
+                                                                                        }}
+                                                                                    >
+                                                                                        <a className="btn btn-apply-now">Apply Now</a>
+                                                                                    </Link>
+                                                                                ) : (
+
+
+                                                                                    <Link legacyBehavior
+                                                                                        href={{
+                                                                                            pathname: '/page-edit-job',
+                                                                                            query: { id: job.id },
+                                                                                        }}
+                                                                                    >
+                                                                                        <a className="btn btn-apply-now">Edit</a>
+                                                                                    </Link>
+                                                                                )
+                                                                            }
+
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -194,7 +239,7 @@ export default function JobGrid() {
                                                     Advance Filter
                                                     <Link legacyBehavior href="#"
 
-                                                     >
+                                                    >
                                                         <a className="link-reset">Reset</a>
                                                     </Link>
                                                 </h5>
