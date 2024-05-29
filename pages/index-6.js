@@ -526,26 +526,6 @@ export default function Index6() {
                             </div>
                         </div>
                     </section>
-                    <section className="section-box mt-50 mb-20">
-                        <div className="container">
-                            <div className="box-newsletter box-newsletter-3">
-                                <div className="row">
-                                    <div className="col-xl-12 text-center">
-                                        <div className="d-inline-block">
-                                            <h2 className="color-white mt-30">Subscribe our newsletter</h2>
-                                            <p className="mt-10 font-lg color-white">New Things Will Always Update Regularl</p>
-                                            <div className="box-form-newsletter mt-30">
-                                                <form className="form-newsletter">
-                                                    <input className="input-newsletter" type="text" placeholder="Enter your email here" />
-                                                    <button className="btn btn-default font-heading icon-send-letter">Subscribe</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
                 </div>
             </Layout>
         </>

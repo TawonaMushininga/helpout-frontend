@@ -15,10 +15,10 @@ const Header = ({ handleOpen, handleRemove, openClass }) => {
     const isAuthenticated = async () => {
         const accessToken = await sessionStorage.getItem('access-token');
         if (accessToken !== null) {
-            console.log('authenticated');
+            // console.log('authenticated');
             return true;
         }
-        console.log('not authenticated');
+        // console.log('not authenticated');
         return false;
     }
 
@@ -72,7 +72,7 @@ const Header = ({ handleOpen, handleRemove, openClass }) => {
                     <div className="main-header">
                         <div className="header-left">
                             <div className="header-logo">
-                                <Link legacyBehavior href="/"><a className="d-flex"><img alt="jobBox" src="assets/imgs/template/jobhub-logo.svg" /></a></Link>
+                                <h4 className="d-flex"> GiG - Jobs</h4>
                             </div>
                         </div>
                         <div className="header-nav">
@@ -136,9 +136,16 @@ const Header = ({ handleOpen, handleRemove, openClass }) => {
                                             </li>
                                         </ul>
                                     </li> */}
-                                    <li>
-                                        <Link legacyBehavior href="/page-contact"><a>Contact</a></Link>
-                                    </li>
+                                    {
+                                        isAuth === true && userDetails.role !== "employee" && userDetails.role !== "" && (
+                                            <li>
+                                                <Link legacyBehavior href="/page-createjob">
+                                                    <a>Create Job {userDetails.role}</a>
+                                                </Link>
+                                            </li>
+                                        )
+                                    }
+
                                 </ul>
                             </nav>
                             <div className={`burger-icon burger-icon-white ${openClass && "burger-close"}`}

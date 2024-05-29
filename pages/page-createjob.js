@@ -1,94 +1,149 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { set, useForm } from 'react-hook-form';
 import Layout from "../components/Layout/Layout";
 import axios from "axios";
 import { toast } from "react-toastify";
 import BackendUrl from "../util/url";
 import { Token } from "../util/url";
+import { getUserDetails } from "../util/userDetails";
 
 function CreateJob() {
   const [loading, setLoading] = useState(false);
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
+  const [userDetails, setUserDetails] = useState({});
+    const [isAuth, setIsAuth] = useState(false);
+
+  const isAuthenticated = async () => {
+    const accessToken = await sessionStorage.getItem('access-token');
+    if (accessToken !== null) {
+        // console.log('authenticated');
+        return true;
+    }
+    // console.log('not authenticated');
+    return false;
+}
+
+
 
   const onSubmit = async (data) => {
     console.log('Job Details:', data);
     setLoading(true);
 
     const getHeaders = async () => {
-        const accessToken = await sessionStorage.getItem('access-token');
-        const client = await sessionStorage.getItem('client');
-        const expiry = await sessionStorage.getItem('expiry');
-        const uid = await sessionStorage.getItem('uid');
-        const tokenType = await sessionStorage.getItem('token-type');
+      const accessToken = await sessionStorage.getItem('access-token');
+      const client = await sessionStorage.getItem('client');
+      const expiry = await sessionStorage.getItem('expiry');
+      const uid = await sessionStorage.getItem('uid');
+      const tokenType = await sessionStorage.getItem('token-type');
 
-        console.log({ accessToken, client, expiry, uid, tokenType });
+      console.log({ accessToken, client, expiry, uid, tokenType });
 
-        return {
-            "ngrok-skip-browser-warning": "69420",
-            "access-token": accessToken,
-            "client": client,
-            "expiry": expiry,
-            "uid": uid,
-            "token-type": tokenType,
-        };
+      return {
+        "ngrok-skip-browser-warning": "69420",
+        "access-token": accessToken,
+        "client": client,
+        "expiry": expiry,
+        "uid": uid,
+        "token-type": tokenType,
+      };
     };
 
     const url = `${BackendUrl}/api/v1/jobs`;
 
     try {
-        const headers = await getHeaders();
+      const headers = await getHeaders();
 
-        const response = await axios.post(url, {
-            title: data.title,
-            description: data.description,
-            location: data.location,
-            amount: data.amount,
-            job_type: data.job_type,
-            payment_type: data.payment_type,
-            region: data.region,
-            deadline: data.deadline,
-            experience: data.experience,
-            hours: data.hours,
-            date: data.date
-        }, { headers });
+      const response = await axios.post(url, {
+        title: data.title,
+        description: data.description,
+        location: data.location,
+        amount: data.amount,
+        job_type: data.job_type,
+        payment_type: data.payment_type,
+        region: data.region,
+        deadline: data.deadline,
+        experience: data.experience,
+        hours: data.hours,
+        date: data.date
+      }, { headers });
 
-        console.log(response);
-        setLoading(false);
+      console.log(response);
+      setLoading(false);
 
-        if (response.status === 200) {
-            toast.success("Job Created Successfully", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true
-            });
-            reset();  // Reset form after successful submission
-            // window.location.href = "/page-dashboard";
-        } else {
-            toast.error("Job Creation Failed", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true
-            });
-        }
-    } catch (error) {
-        console.log(error);
-        setLoading(false);
-        toast.error("Job Creation Failed", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true
+      if (response.status === 200) {
+        toast.success("Job Created Successfully", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true
         });
+        reset();  // Reset form after successful submission
+        // window.location.href = "/page-dashboard";
+      } else {
+        toast.error("Job Creation Failed", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      toast.error("Job Creation Failed", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true
+      });
     }
   }
+
+
+  useEffect(() => {
+    const checkAuth = async () => {
+        const auth = await isAuthenticated();
+        setIsAuth(auth);
+    };
+
+    checkAuth();
+}, []);
+
+useEffect(() => {
+    if (isAuthenticated) {
+        setUserDetails(getUserDetails());
+    }
+}, [isAuth]);
+
+if(isAuth === true && userDetails.role === "employee" && userDetails.role !== "" ){
+  return (
+    <>
+      <Layout>
+      <section className="pt-100 login-register">
+          <div className="container">
+            <div className="row login-register-cover">
+              <div className="col-lg-6 col-md-8 col-sm-12 mx-auto">
+                <div className="text-center mb-4">
+                <h1>Role - Employee </h1>
+        <p>
+          You are not authorized to view this page
+        </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </Layout>
+    </>
+  )
+}
 
 
   return (
@@ -101,6 +156,15 @@ function CreateJob() {
                 <div className="text-center mb-4">
                   <h2 className="mt-10 mb-5 text-brand-1">Job Creation</h2>
                 </div>
+                {
+                                        isAuth === true && userDetails.role === "employee" && userDetails.role !== "" && (
+                                            <li>
+                                                <Link legacyBehavior href="/page-createjob">
+                                                    <a>Create Job {userDetails.role}</a>
+                                                </Link>
+                                            </li>
+                                        )
+                                    }
                 <form onSubmit={handleSubmit(onSubmit)} className="bg-light p-4 rounded shadow-sm">
                   <div className="form-group mb-3">
                     <label htmlFor="title">Job Title</label>
@@ -142,13 +206,22 @@ function CreateJob() {
                     {errors.amount && <span className="invalid-feedback">This field is required</span>}
                   </div>
                   <div className="form-group mb-3">
+                    <label htmlFor="amount">Max Applicants</label>
+                    <input
+                      type="number"
+                      className={`form-control ${errors.max_applicants ? 'is-invalid' : ''}`}
+                      id="amount"
+                      {...register('amount', { required: true })}
+                    />
+                    {errors.max_applicants && <span className="invalid-feedback">This field is required</span>}
+                  </div>
+                  <div className="form-group mb-3">
                     <label htmlFor="job_type">Job Type</label>
                     <select
                       className={`form-control ${errors.job_type ? 'is-invalid' : ''}`}
                       id="job_type"
                       {...register('job_type', { required: true })}
                     >
-                      <option value="">Select job type</option>
                       <option value="software">Software</option>
                       <option value="tutor">Tutor</option>
                       <option value="manager">Manager</option>
@@ -156,16 +229,21 @@ function CreateJob() {
                     </select>
                     {errors.job_type && <span className="invalid-feedback">This field is required</span>}
                   </div>
+
+
                   <div className="form-group mb-3">
                     <label htmlFor="payment_type">Payment Type</label>
-                    <input
-                      type="text"
+                    <select
                       className={`form-control ${errors.payment_type ? 'is-invalid' : ''}`}
-                      id="payment_type"
+                      id="job_type"
                       {...register('payment_type', { required: true })}
-                    />
+                    >
+                      <option value="hourly">Hourly</option>
+                      <option value="fixed">Fixed</option>
+                    </select>
                     {errors.payment_type && <span className="invalid-feedback">This field is required</span>}
                   </div>
+
                   <div className="form-group mb-3">
                     <label htmlFor="region">Region</label>
                     <input

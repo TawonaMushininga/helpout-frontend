@@ -6,6 +6,7 @@ import axios from "axios";
 import  BackendUrl from "../util/url";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
+import PageHead from "../components/Layout/PageHead"
 export default function JobGrid() {
 
     const [jobs, setJobs] = useState([]);
@@ -125,84 +126,7 @@ export default function JobGrid() {
                             <div className="row flex-row-reverse">
                                 <div className="col-lg-9 col-md-12 col-sm-12 col-12 float-right">
                                     <div className="content-page">
-                                        <div className="box-filters-job">
-                                            <div className="row">
-                                                <div className="col-xl-6 col-lg-5">
-                                                    <span className="text-small text-showing">
-                                                        Showing <strong>41-60 </strong>of <strong>944 </strong>jobs
-                                                    </span>
-                                                </div>
-                                                <div className="col-xl-6 col-lg-7 text-lg-end mt-sm-15">
-                                                    <div className="display-flex2">
-                                                        <div className="box-border mr-10">
-                                                            <span className="text-sortby">Show:</span>
-                                                            <div className="dropdown dropdown-sort">
-                                                                <button className="btn dropdown-toggle" id="dropdownSort" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static">
-                                                                    <span>12</span>
-                                                                    <i className="fi-rr-angle-small-down" />
-                                                                </button>
-                                                                <ul className="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownSort">
-                                                                    <li>
-                                                                        <Link legacyBehavior href="#">
-                                                                            <a className="dropdown-item active">10</a>
-                                                                        </Link>
-                                                                    </li>
-                                                                    <li>
-                                                                        <Link legacyBehavior href="#">
-                                                                            <a className="dropdown-item">12</a>
-                                                                        </Link>
-                                                                    </li>
-                                                                    <li>
-                                                                        <Link legacyBehavior href="#">
-                                                                            <a className="dropdown-item">20</a>
-                                                                        </Link>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                        <div className="box-border">
-                                                            <span className="text-sortby">Sort by:</span>
-                                                            <div className="dropdown dropdown-sort">
-                                                                <button className="btn dropdown-toggle" id="dropdownSort2" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static">
-                                                                    <span>Newest Post</span>
-                                                                    <i className="fi-rr-angle-small-down" />
-                                                                </button>
-                                                                <ul className="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownSort2">
-                                                                    <li>
-                                                                        <Link legacyBehavior href="#">
-                                                                            <a className="dropdown-item active">Newest Post</a>
-                                                                        </Link>
-                                                                    </li>
-                                                                    <li>
-                                                                        <Link legacyBehavior href="#">
-                                                                            <a className="dropdown-item">Oldest Post</a>
-                                                                        </Link>
-                                                                    </li>
-                                                                    <li>
-                                                                        <Link legacyBehavior href="#">
-                                                                            <a className="dropdown-item">Rating Post</a>
-                                                                        </Link>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                        <div className="box-view-type">
-                                                            <Link legacyBehavior href="/jobs-list">
-                                                                <a className="view-type">
-                                                                    <img src="assets/imgs/template/icons/icon-list.svg" alt="jobBox" />
-                                                                </a>
-                                                            </Link>
 
-                                                            <Link legacyBehavior href="/jobs-grid">
-                                                                <a className="view-type">
-                                                                    <img src="assets/imgs/template/icons/icon-grid-hover.svg" alt="jobBox" />
-                                                                </a>
-                                                            </Link>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                         <div className="row">
 
                                             {
@@ -260,51 +184,7 @@ export default function JobGrid() {
 
                                         </div>
                                     </div>
-                                    <div className="paginations">
-                                        <ul className="pager">
-                                            <li>
-                                                <a className="pager-prev" href="#" />
-                                            </li>
-                                            <li>
-                                                <Link legacyBehavior href="#">
-                                                    <a className="pager-number">1</a>
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link legacyBehavior href="#">
-                                                    <a className="pager-number">2</a>
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link legacyBehavior href="#">
-                                                    <a className="pager-number">3</a>
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link legacyBehavior href="#">
-                                                    <a className="pager-number">4</a>
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link legacyBehavior href="#">
-                                                    <a className="pager-number">5</a>
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link legacyBehavior href="#">
-                                                    <a className="pager-number active">6</a>
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link legacyBehavior href="#">
-                                                    <a className="pager-number">7</a>
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <a className="pager-next" href="#" />
-                                            </li>
-                                        </ul>
-                                    </div>
+
                                 </div>
                                 <div className="col-lg-3 col-md-12 col-sm-12 col-12">
                                     <div className="sidebar-shadow none-shadow mb-30">
@@ -464,32 +344,6 @@ export default function JobGrid() {
                         </div>
                     </section>
 
-                    <section className="section-box mt-50 mb-20">
-                        <div className="container">
-                            <div className="box-newsletter">
-                                <div className="row">
-                                    <div className="col-xl-3 col-12 text-center d-none d-xl-block">
-                                        <img src="assets/imgs/template/newsletter-left.png" alt="joxBox" />
-                                    </div>
-                                    <div className="col-lg-12 col-xl-6 col-12">
-                                        <h2 className="text-md-newsletter text-center">
-                                            New Things Will Always
-                                            <br /> Update Regularly
-                                        </h2>
-                                        <div className="box-form-newsletter mt-40">
-                                            <form className="form-newsletter">
-                                                <input className="input-newsletter" type="text" placeholder="Enter your email here" />
-                                                <button className="btn btn-default font-heading icon-send-letter">Subscribe</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <div className="col-xl-3 col-12 text-center d-none d-xl-block">
-                                        <img src="assets/imgs/template/newsletter-right.png" alt="joxBox" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
                 </div>
             </Layout>
         </>
