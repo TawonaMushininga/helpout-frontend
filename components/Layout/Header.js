@@ -136,11 +136,26 @@ const Header = ({ handleOpen, handleRemove, openClass }) => {
                                             </li>
                                         </ul>
                                     </li> */}
+
+
                                     {
-                                        isAuth === true && userDetails.role !== "employee" && userDetails.role !== "" && (
+                                        isAuth === true && userDetails.role !== "employee" && userDetails.role !== "" ? (
+                                            <>
+                                                <li>
+                                                    <Link legacyBehavior href="/page-createjob">
+                                                        <a>Create Job </a>
+                                                    </Link>
+                                                </li>
+                                                <li>
+                                                    <Link legacyBehavior href="/page-jobs_mine">
+                                                        <a>My Jobs </a>
+                                                    </Link>
+                                                </li>
+                                            </>
+                                        ) : (
                                             <li>
-                                                <Link legacyBehavior href="/page-createjob">
-                                                    <a>Create Job </a>
+                                                <Link legacyBehavior href="/page-applications">
+                                                    <a>My Applications </a>
                                                 </Link>
                                             </li>
                                         )

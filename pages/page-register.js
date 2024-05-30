@@ -54,7 +54,7 @@ export default function Register() {
                         pauseOnHover: true,
                         draggable: true
                     });
-                    window.location.href = "/page-profile";
+                    window.location.href = "/page-signin";
                 })
                 .catch((error) => {
                     toast.error("Registration Failed", {
