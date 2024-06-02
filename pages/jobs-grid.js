@@ -72,9 +72,9 @@ export default function JobGrid() {
         try {
             const headers = await getHeaders();
             const response = await axios.get(`${BackendUrl}/api/v1/jobs`, headers);
-            // console.log(response.data);
+            console.log(response.data);
             setJobs(response.data);
-            toast.success("Jobs fetched successfully");
+            response.data.length === 0 ? toast.success("No jobs available") : toast.success("Jobs fetched successfully");
         } catch (error) {
             console.error(error);
             toast.error("Failed to fetch jobs");

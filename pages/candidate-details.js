@@ -212,45 +212,6 @@ export default function CandidateDetails() {
                         </div>
                     </div>
                 </section>
-                <section className="section-box-2">
-                    <div className="container">
-                        <div className="box-nav-tabs mt-40 mb-5">
-                            <ul className="nav" role="tablist">
-                                <li>
-                                    <a className="btn btn-border aboutus-icon mr-15 mb-5 active">
-                                        Job Applications
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div className="row">
-                            <div className="col-lg-8 col-md-12 col-sm-12 col-12">
-                                <table className="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Job Title</th>
-                                            <th scope="col">Location</th>
-                                            <th scope="col">Duration</th>
-                                            <th scope="col">Date</th>
-                                            <th scope="col">Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {jobApplications.map((jobApplication, index) => (
-                                            <tr key={index}>
-                                                <td>{jobApplication.job.title}</td>
-                                                <td>{jobApplication.job.location}</td>
-                                                <td>{jobApplication.job.hours} hours</td>
-                                                <td>{new Date(jobApplication.job.date).toLocaleDateString()}</td>
-                                                <td>{jobApplication.status}</td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </section>
             </Layout>
         </>
     );
