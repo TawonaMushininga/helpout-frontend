@@ -46,7 +46,8 @@ export default function UsersApplications() {
                 `${BackendUrl}/api/v1/job_applications`,
                 { headers }
             );
-            setJobApplications(response.data);
+            response.data && setJobApplications(response.data);
+            console.log(response.data);
             toast.success("Job Application Successful");
         } catch (error) {
             console.error(error.response ? error.response.data : error.message);
@@ -132,13 +133,13 @@ export default function UsersApplications() {
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        {jobApplications.map((jobApplication, index) => (
+                                                        {jobApplications.length > 0 && jobApplications.map((jobApplication, index) => (
                                                             <tr key={index}>
-                                                                <td>{jobApplication.job.title}</td>
-                                                                <td>{jobApplication.job.location}</td>
-                                                                <td>{jobApplication.job.hours} hours</td>
-                                                                <td>{new Date(jobApplication.job.date).toLocaleDateString()}</td>
-                                                                <td>{jobApplication.status}</td>
+                                                                <td>{jobApplication?.job?.title}</td>
+                                                                <td>{jobApplication?.job?.location}</td>
+                                                                <td>{jobApplication?.job?.hours} hours</td>
+                                                                <td>{new Date(jobApplication?.job?.date).toLocaleDateString()}</td>
+                                                                <td>{jobApplication?.status}</td>
                                                                 <td>
                                                                     <Link legacyBehavior
                                                                         href={{
