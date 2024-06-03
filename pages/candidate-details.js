@@ -4,12 +4,16 @@ import React, { useState, useEffect } from "react";
 import BackendUrl from "../util/url";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { getUserDetails } from "../util/userDetails";
 
 
 export default function CandidateDetails() {
     const [activeIndex, setActiveIndex] = useState(1);
     const [loading, setLoading] = useState(false);
     const [jobApplications, setJobApplications] = useState([]);
+    const [userDetails, setUserDetails] = useState({});
+    const [isAuth, setIsAuth] = useState(false);
+    const [myJobs, setMyJobs] = useState([]);
 
     const getHeaders = async () => {
         const accessToken = sessionStorage.getItem('access-token');
@@ -34,7 +38,15 @@ export default function CandidateDetails() {
         return headers;
     };
 
-
+    const isAuthenticated = async () => {
+        const accessToken = await sessionStorage.getItem('access-token');
+        if (accessToken !== null) {
+            // console.log('authenticated');
+            return true;
+        }
+        // console.log('not authenticated');
+        return false;
+    }
 
     const getJobApplications = async () => {
         setLoading(true);
@@ -45,7 +57,29 @@ export default function CandidateDetails() {
                 { headers }
             );
             setJobApplications(response.data);
+            console.log(response.data);
             toast.success("Job Application Successful");
+        } catch (error) {
+            console.error(error.response ? error.response.data : error.message);
+            toast.error("Job Application Failed");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const getJobsMine = async () => {
+        setLoading(true);
+
+        try {
+            const headers = await getHeaders();
+            const response = await axios.get(
+                `${BackendUrl}/api/v1/jobs/jobs_mine`,
+                { headers }
+            );
+            setMyJobs(response.data);
+            console.log(response.data);
+            response.data.length === 0 ? toast.warning("You have not posted any jobs yet") :
+                toast.success("Your Jobs were fetched");
         } catch (error) {
             console.error(error.response ? error.response.data : error.message);
             toast.error("Job Application Failed");
@@ -59,9 +93,25 @@ export default function CandidateDetails() {
     };
 
     useEffect(() => {
-        getJobApplications();
+        !["employee", "admin"].includes(userDetails.role) && userDetails.role !== "" ? getJobsMine() : getJobApplications();
+
     }
         , []);
+
+        useEffect(() => {
+            const checkAuth = async () => {
+                const auth = await isAuthenticated();
+                setIsAuth(auth);
+            };
+
+            checkAuth();
+        }, []);
+
+        useEffect(() => {
+            if (isAuthenticated) {
+                setUserDetails(getUserDetails());
+            }
+        }, [isAuth]);
 
     return (
         <>

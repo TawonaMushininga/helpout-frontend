@@ -95,7 +95,7 @@ export default function JobDetails() {
             const response = await axios.get(`${BackendUrl}/api/v1/job_applications`, { headers });
             console.log(response.data);
         } catch (error) {
-            console.error(error.response ? error.response.data : error.message);
+            console.error(error);
         } finally {
             setLoading(false);
         }

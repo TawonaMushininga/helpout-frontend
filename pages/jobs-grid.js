@@ -159,7 +159,7 @@ export default function JobGrid() {
                                         <div className="row">
 
                                             {
-                                                jobs.map((job, index) => (
+                                                jobs?.map((job, index) => (
                                                     <div key={index} className="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
                                                         <div className="card-grid-2 hover-up">
                                                             <div className="card-grid-2-image-left">
@@ -167,17 +167,13 @@ export default function JobGrid() {
                                                                     <img src={showRandomLogo()} alt="jobBox" />
                                                                 </div>
                                                                 <div className="right-info">
-                                                                    <Link legacyBehavior href="company-details">
-                                                                        <a className="name-job">{job.title}</a>
-                                                                    </Link>
+                                                                    <p className="name-job">{job.title}</p>
                                                                     <span className="location-small">{job.location}</span>
                                                                 </div>
                                                             </div>
                                                             <div className="card-block-info">
                                                                 <h6>
-                                                                    <Link legacyBehavior href="/job-details">
-                                                                        <a>{job.jobTitle}</a>
-                                                                    </Link>
+                                                                    {job.jobTitle}
                                                                 </h6>
                                                                 <div className="mt-5">
                                                                     <span className="card-briefcase">{job.job_type}</span>
