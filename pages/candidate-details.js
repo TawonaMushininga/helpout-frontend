@@ -58,7 +58,7 @@ export default function CandidateDetails() {
             );
             setJobApplications(response.data);
             console.log(response.data);
-            toast.success("Job Application Successful");
+            // toast.success("Job Application Successful");
         } catch (error) {
             console.error(error.response ? error.response.data : error.message);
             toast.error("Job Application Failed");
@@ -113,6 +113,7 @@ export default function CandidateDetails() {
             }
         }, [isAuth]);
 
+
     return (
         <>
             <Layout>
@@ -128,9 +129,13 @@ export default function CandidateDetails() {
                             <div className="row mt-10">
                                 <div className="col-lg-8 col-md-12">
                                     <h5 className="f-18">
-                                        Eroni Masiki <span className="card-location font-regular ml-20">Gweru, ZW</span>
+                                        {
+                                            userDetails ? userDetails.firstName + " " + userDetails.lastName : "Eroni Masiki"
+                                        } <span className="card-location font-regular ml-20">{userDetails.role}</span>
                                     </h5>
-                                    <p className="mt-0 font-md color-text-paragraph-2 mb-15">Plumber</p>
+                                    <p className="mt-0 font-md color-text-paragraph-2 mb-15">{
+                                        userDetails.email
+                                    }</p>
                                     <div className="mt-10 mb-15">
                                         <img src="assets/imgs/template/icons/star.svg" alt="jobbox" />
                                         <img src="assets/imgs/template/icons/star.svg" alt="jobbox" />
