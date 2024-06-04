@@ -93,7 +93,7 @@ export default function Signin() {
                         draggable: true
                     });
                     // Redirect or do something else
-                    window.location.href = "/page-profile";
+                    window.location.href = "/candidate-details";
                 } else {
                     toast.error("Login Failed", {
                         position: "top-right",
