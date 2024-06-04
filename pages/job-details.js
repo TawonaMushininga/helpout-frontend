@@ -2,7 +2,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import Layout from "../components/Layout/Layout";
-import FeaturedSlider from "./../components/sliders/Featured";
 import { useRouter } from 'next/router'
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -59,7 +58,6 @@ export default function JobDetails() {
             const headers = await getHeaders();
             const response = await axios.get(url, { headers });
             setJob(response.data);
-            console.log(response.data);
             setUser(getUserDetails());
         } catch (error) {
             console.error(error.response ? error.response.data : error.message);
@@ -101,6 +99,7 @@ export default function JobDetails() {
         }
     }
 
+
     useEffect(() => {
         if (id) {
             fetchJobDetails();
@@ -128,20 +127,31 @@ export default function JobDetails() {
                                                     <span className="card-time">{formatDate(job.created_at)}</span>
                                                 </div>
                                             </div>
-                                            <div className="col-lg-4 col-md-12 text-lg-end">
-                                                {
-                                                    user && user.role === "employee" ? (
-                                                        <button onClick={()=>applyJob()} className="btn btn-apply-icon btn-apply btn-apply-big hover-up" data-bs-toggle="modal" data-bs-target="#ModalApplyJobForm">
-                                                            Apply now
-                                                        </button>
-                                                    ) : (
-                                                        <div className="btn btn-apply-icon btn-apply btn-apply-big hover-up" data-bs-toggle="modal" data-bs-target="#ModalApplyJobForm">
-                                                            Edit Job
-                                                        </div>
-                                                    )
-                                                }
+                                            {
+                                                job.employee_id === Number(user.id) ? (
+                                                    <div className="col-lg-4 col-md-12 text-lg-end">
+                                                        <h4>
+                                                            Application Status : {job.status}
+                                                        </h4>
+                                                    </div>
+                                                ) : (
+                                                    <div className="col-lg-4 col-md-12 text-lg-end">
+                                                        {
+                                                            user && user.role === "employee" ? (
+                                                                <button onClick={() => applyJob()} className="btn btn-apply-icon btn-apply btn-apply-big hover-up" data-bs-toggle="modal" data-bs-target="#ModalApplyJobForm">
+                                                                    Apply now
+                                                                </button>
+                                                            ) : (
+                                                                <div className="btn btn-apply-icon btn-apply btn-apply-big hover-up" data-bs-toggle="modal" data-bs-target="#ModalApplyJobForm">
+                                                                    Edit Job
+                                                                </div>
+                                                            )
+                                                        }
 
-                                            </div>
+                                                    </div>
+                                                )
+                                            }
+
                                         </div>
                                         <div className="border-bottom pt-10 pb-10" />
                                     </div>
@@ -242,17 +252,7 @@ export default function JobDetails() {
                                                     <div className="row align-items-center">
                                                         <div className="col-md-5">
 
-                                                        {
-                                                    user && user.role === "employee" ? (
-                                                        <button onClick={()=>applyJob()} className="btn btn-apply-icon btn-apply btn-apply-big hover-up" data-bs-toggle="modal" data-bs-target="#ModalApplyJobForm">
-                                                            Apply now
-                                                        </button>
-                                                    ) : (
-                                                        <div className="btn btn-apply-icon btn-apply btn-apply-big hover-up" data-bs-toggle="modal" data-bs-target="#ModalApplyJobForm">
-                                                            Edit Job
-                                                        </div>
-                                                    )
-                                                }
+
 
 
                                                         </div>

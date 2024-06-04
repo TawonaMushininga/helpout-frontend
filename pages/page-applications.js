@@ -36,6 +36,10 @@ export default function UsersApplications() {
         return headers;
     };
 
+    function filterWithoutJob(array) {
+        return array.filter(item => item.job).sort((a, b) => a.status.localeCompare(b.status));
+    }
+
 
 
     const getJobApplications = async () => {
@@ -46,8 +50,8 @@ export default function UsersApplications() {
                 `${BackendUrl}/api/v1/job_applications`,
                 { headers }
             );
-            response.data && setJobApplications(response.data);
-            console.log(response.data);
+            response.data && setJobApplications(filterWithoutJob(response.data));
+
             toast.success("Job Application Successful");
         } catch (error) {
             console.error(error.response ? error.response.data : error.message);
@@ -81,7 +85,7 @@ export default function UsersApplications() {
                             </div>
                             <div className="row mt-10">
                                 <div className="col-lg-8 col-md-12">
-                                <h5 className="f-18">
+                                    <h5 className="f-18">
                                         {user.firstName} {user.lastName} <span className="card-location font-regular ml-20">Gweru, ZW</span>
                                     </h5>
                                     <p className="mt-0 font-md color-text-paragraph-2 mb-15">{user.role}</p>
@@ -139,7 +143,18 @@ export default function UsersApplications() {
                                                                 <td>{jobApplication?.job?.location}</td>
                                                                 <td>{jobApplication?.job?.hours} hours</td>
                                                                 <td>{new Date(jobApplication?.job?.date).toLocaleDateString()}</td>
-                                                                <td>{jobApplication?.status}</td>
+                                                                <td>{jobApplication?.status == "accepted" ? (
+                                                                    <span style={{
+                                                                        color: "green",
+                                                                        fontWeight: "bold"
+                                                                    }}>{jobApplication.status}</span>
+                                                                ) : (
+                                                                    <span style={{
+                                                                        color: "red",
+                                                                        fontWeight: "bold"
+                                                                    }}>{jobApplication.status}</span>
+
+                                                                )}</td>
                                                                 <td>
                                                                     <Link legacyBehavior
                                                                         href={{
