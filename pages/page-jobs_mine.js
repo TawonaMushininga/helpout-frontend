@@ -112,15 +112,20 @@ export default function JobsMine() {
         , []);
 
 
-
     return (
         <>
             <Layout>
                 {
                     loading ? (
-                        <section className="section-box-2">
-                            <h1>Loading</h1>
-                        </section>
+                        <Layout>
+                            <div className="container">
+                                <div className="d-flex justify-content-center align-items-center" style={{ height: "50vh" }}>
+                                    <div className="spinner-border text-primary" role="status">
+                                        <span className="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </Layout>
                     ) : (
                         <>
 
@@ -246,19 +251,37 @@ export default function JobsMine() {
                                                                                         gap: "1rem",
 
                                                                                     }} >
-                                                                                        <button
-                                                                                            className="btn btn-primary"
-                                                                                            onClick={() => acceptUser(application.id)}
-                                                                                        >
-                                                                                            Accept
-                                                                                        </button>
+                                                                                        {
+                                                                                            job.employee_id === null && (
+                                                                                                <>
+                                                                                                    <button
+                                                                                                        className="btn btn-primary"
+                                                                                                        onClick={() => acceptUser(application.id)}
+                                                                                                    >
+                                                                                                        Accept
+                                                                                                    </button>
 
-                                                                                        <button
-                                                                                            className="btn btn-secondary"
-                                                                                            onClick={() => rejectUser(application.id)}
+                                                                                                    <button
+                                                                                                        className="btn btn-secondary"
+                                                                                                        onClick={() => rejectUser(application.id)}
+                                                                                                    >
+                                                                                                        Reject
+                                                                                                    </button>
+                                                                                                </>
+                                                                                            )
+                                                                                        }
+
+                                                                                        <Link legacyBehavior
+                                                                                            href={{
+                                                                                                pathname: '/applicant',
+                                                                                                query: { id: application.user_id },
+                                                                                            }}
                                                                                         >
-                                                                                            Reject
-                                                                                        </button>
+                                                                                            <a className="btn btn-apply-now">View Candidate</a>
+                                                                                        </Link>
+
+
+
 
                                                                                     </td>
                                                                                 </tr>
