@@ -8,6 +8,7 @@ import CategoryTab2 from "../components/elements/CategoryTab2";
 import Layout from "../components/Layout/Layout";
 import Link from "next/link";
 import TestimonialSlider1 from "../components/sliders/Testimonial1";
+import TopRekruterSlider from "../components/sliders/TopRekruter";
 
 export default function Index4() {
     return (
@@ -33,55 +34,10 @@ export default function Index4() {
                                             </div>
                                             <div className="form-find mt-40 wow animate__animated animate__fadeIn" data-wow-delay=".2s">
                                                 <form>
-                                                    <div className="box-industry">
-                                                        <select className="form-input mr-10 select-active input-industry">
-                                                            <option value={0}>Industry</option>
-                                                            <option value={1}>Software</option>
-                                                            <option value={2}>Finance</option>
-                                                            <option value={3}>Recruting</option>
-                                                            <option value={4}>Management</option>
-                                                            <option value={5}>Advertising</option>
-                                                            <option value={6}>Development</option>
-                                                        </select>
-                                                    </div>
-                                                    <div className="box-industry">
-                                                        <select className="form-input mr-10 select-active input-location">
-                                                            <option value>Location</option>
-                                                            <option value="HRE">Harare</option>
-                                                            <option value="BYO">Bulawayo</option>
-                                                            <option value="KAD">Kadoma</option>
-                                                            <option value="MAS">Masvingo</option>
-                                                            <option value="MUT">Mutare</option>
-                                                            <option value="GWE">Gweru</option>
-                                                        </select>
-                                                    </div>
-                                                    <input className="form-input input-keysearch mr-10" type="text" placeholder="Your keyword... " />
-                                                    <button className="btn btn-default btn-find font-sm">Search</button>
+
+                                                    <input className="form-input input-keysearch mr-10" type="text" placeholder="Join waiting list... " />
+                                                    <button className="btn btn-default btn-find font-sm">Join</button>
                                                 </form>
-                                            </div>
-                                            <div className="list-tags-banner mt-60 wow animate__animated animate__fadeInUp" data-wow-delay=".3s">
-                                                <strong>Popular Searches:</strong>
-                                                <Link legacyBehavior href="#">
-                                                    <a>Designer, </a>
-                                                </Link>
-                                                <Link legacyBehavior href="#">
-                                                    <a>Web, </a>
-                                                </Link>
-                                                <Link legacyBehavior href="#">
-                                                    <a>IOS, </a>
-                                                </Link>
-                                                <Link legacyBehavior href="#">
-                                                    <a>Developer, </a>
-                                                </Link>
-                                                <Link legacyBehavior href="#">
-                                                    <a>PHP, </a>
-                                                </Link>
-                                                <Link legacyBehavior href="#">
-                                                    <a>Senior, </a>
-                                                </Link>
-                                                <Link legacyBehavior href="#">
-                                                    <a>Engineer, </a>
-                                                </Link>
                                             </div>
                                         </div>
                                     </div>
@@ -126,6 +82,24 @@ export default function Index4() {
                             </div>
                         </div>
                     </section>
+
+
+
+                    <section className="section-box mt-50">
+                        <div className="container">
+                            <div className="text-start">
+                                <h2 className="section-title mb-10 wow animate__animated animate__fadeInUp">Trusted by these companies </h2>
+                                {/* <p className="font-lg color-text-paragraph-2 wow animate__animated animate__fadeInUp"> We </p> */}
+                            </div>
+                        </div>
+                        <div className="container">
+                            <div className="box-swiper mt-50">
+                                <TopRekruterSlider />
+                            </div>
+                        </div>
+                    </section>
+
+
                     <section className="section-box mt-0">
                         <div className="section-box wow animate__animated animate__fadeIn">
                             <div className="container">
@@ -142,6 +116,8 @@ export default function Index4() {
                             </div>
                         </div>
                     </section>
+
+
 
                     <section className="section-box mt-80">
                         <div className="container">

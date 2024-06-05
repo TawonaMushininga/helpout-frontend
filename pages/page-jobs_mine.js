@@ -254,7 +254,7 @@ export default function JobsMine() {
 
                                                                                     }} >
                                                                                         {
-                                                                                            job.employee_id === null && (
+                                                                                            !["rejected", "accepted"].includes(application.status) && (
                                                                                                 <>
                                                                                                     <button
                                                                                                         className="btn btn-primary"
