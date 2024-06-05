@@ -98,20 +98,34 @@ export default function CandidateDetails() {
     }
         , []);
 
-        useEffect(() => {
-            const checkAuth = async () => {
-                const auth = await isAuthenticated();
-                setIsAuth(auth);
-            };
+    useEffect(() => {
+        const checkAuth = async () => {
+            const auth = await isAuthenticated();
+            setIsAuth(auth);
+        };
 
-            checkAuth();
-        }, []);
+        checkAuth();
+    }, []);
 
-        useEffect(() => {
-            if (isAuthenticated) {
-                setUserDetails(getUserDetails());
-            }
-        }, [isAuth]);
+    useEffect(() => {
+        if (isAuthenticated) {
+            setUserDetails(getUserDetails());
+        }
+    }, [isAuth]);
+
+    if (loading) {
+        return (
+            <Layout>
+                <div className="container">
+                    <div className="d-flex justify-content-center align-items-center" style={{ height: "50vh" }}>
+                        <div className="spinner-border text-primary" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </Layout>
+        );
+    }
 
 
     return (
@@ -147,9 +161,9 @@ export default function CandidateDetails() {
                                     </div>
                                 </div>
                                 <div className="col-lg-4 col-md-12 text-lg-end">
-                                    <Link legacyBehavior href="candidate-profile">
+                                    {/* <Link legacyBehavior href="candidate-profile">
                                         <a className="btn btn-download-icon btn-apply btn-apply-big">Edit Profile</a>
-                                    </Link>
+                                    </Link> */}
                                 </div>
                             </div>
                         </div>

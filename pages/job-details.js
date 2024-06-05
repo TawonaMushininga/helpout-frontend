@@ -107,11 +107,21 @@ export default function JobDetails() {
         }
     }, [id]);
 
+
+
     return (
         <>
             <Layout>
                 {
-                    loading ? <div>Loading...</div> : (
+                    loading ? <Layout>
+                        <div className="container">
+                            <div className="d-flex justify-content-center align-items-center" style={{ height: "50vh" }}>
+                                <div className="spinner-border text-primary" role="status">
+                                    <span className="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </Layout> : (
                         <>
                             <div>
                                 <section className="section-box-2">

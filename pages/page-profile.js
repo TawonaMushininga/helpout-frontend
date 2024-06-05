@@ -22,9 +22,21 @@ export default function CandidateProfile() {
         }
     }, []);
 
-    if (isAuthenticated === null) {
-        return <div>Loading...</div>; // Render a loading state while authentication is being checked
+    if (isAuthenticated) {
+        return (
+            <Layout>
+                <div className="container">
+                    <div className="d-flex justify-content-center align-items-center" style={{ height: "50vh" }}>
+                        <div className="spinner-border text-primary" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </Layout>
+        );
     }
+
+
     return (
         <>
             <Layout>
