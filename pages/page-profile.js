@@ -22,7 +22,7 @@ export default function CandidateProfile() {
         }
     }, []);
 
-    if (loading) {
+    if (isAuthenticated) {
         return (
             <Layout>
                 <div className="container">
