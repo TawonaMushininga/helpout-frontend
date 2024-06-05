@@ -75,6 +75,7 @@ export default function JobsMine() {
                 { headers }
             );
             console.log(response.data);
+            getJobsMine();
             toast.success("User Accepted");
         } catch (error) {
             console.error(error.response ? error.response.data : error.message);
@@ -95,6 +96,7 @@ export default function JobsMine() {
                 { headers }
             );
             console.log(response.data);
+            getJobsMine();
             toast.success("User Rejected");
         } catch (error) {
             console.error(error.response ? error.response.data : error.message);

@@ -64,7 +64,8 @@ function CreateJob() {
         deadline: data.deadline,
         experience: data.experience,
         hours: data.hours,
-        date: data.date
+        date: data.date,
+        max_applicants: data.max_applicants
       }, { headers });
 
       console.log(response);
@@ -211,7 +212,7 @@ if(isAuth === true && userDetails.role === "employee" && userDetails.role !== ""
                       type="number"
                       className={`form-control ${errors.max_applicants ? 'is-invalid' : ''}`}
                       id="amount"
-                      {...register('amount', { required: true })}
+                      {...register('max_applicants', { required: true })}
                     />
                     {errors.max_applicants && <span className="invalid-feedback">This field is required</span>}
                   </div>
