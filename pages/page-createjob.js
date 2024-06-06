@@ -188,12 +188,22 @@ if(isAuth === true && userDetails.role === "employee" && userDetails.role !== ""
                   </div>
                   <div className="form-group mb-3">
                     <label htmlFor="location">Location</label>
-                    <input
+                    {/* <input
                       type="text"
                       className={`form-control ${errors.location ? 'is-invalid' : ''}`}
                       id="location"
                       {...register('location', { required: true })}
-                    />
+                    /> */}
+                    <select
+                      className={`form-control ${errors.location ? 'is-invalid' : ''}`}
+                      id="job_type"
+                      {...register('location', { required: true })}
+                    >
+                      <option value="harare">Harare</option>
+                      <option value="bulawayo">Bulawayo</option>
+                      <option value="mazowe">Mazowe</option>
+                      <option value="mvurwi">Mvurwi</option>
+                    </select>
                     {errors.location && <span className="invalid-feedback">This field is required</span>}
                   </div>
                   <div className="form-group mb-3">
@@ -247,12 +257,17 @@ if(isAuth === true && userDetails.role === "employee" && userDetails.role !== ""
 
                   <div className="form-group mb-3">
                     <label htmlFor="region">Region</label>
-                    <input
-                      type="text"
+
+                    <select
                       className={`form-control ${errors.region ? 'is-invalid' : ''}`}
-                      id="region"
+                      id="job_type"
                       {...register('region', { required: true })}
-                    />
+                    >
+                      <option value="harare">Harare</option>
+                      <option value="bulawayo">Bulawayo</option>
+                      <option value="mazowe">Mazowe</option>
+                      <option value="mvurwi">Mvurwi</option>
+                    </select>
                     {errors.region && <span className="invalid-feedback">This field is required</span>}
                   </div>
                   <div className="form-group mb-3">

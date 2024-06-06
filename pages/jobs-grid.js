@@ -167,7 +167,15 @@ export default function JobGrid() {
                                                                     <img src={showRandomLogo()} alt="jobBox" />
                                                                 </div>
                                                                 <div className="right-info">
-                                                                    <p className="name-job">{job.title}</p>
+                                                                <Link legacyBehavior
+                                                                                        href={{
+                                                                                            pathname: '/job-details',
+                                                                                            query: { id: job.id },
+                                                                                        }}
+                                                                                    >
+                                                                                        <a className="name-job">{job.title}</a>
+                                                                                    </Link>
+
                                                                     <span className="location-small">{job.location}</span>
                                                                 </div>
                                                             </div>
