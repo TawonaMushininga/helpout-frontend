@@ -29,7 +29,7 @@ export default function Register() {
                 last_name: data.fullname.split(" ")[1],
                 email: data.emailaddress,
                 username: data.username,
-                role: data.role === "Job Seeker" ? 0 : 1,
+                role: data.role === "Job Seeker" ? 2 : 1,
                 password: data.password,
                 password_confirmation: data.repassword
             }
