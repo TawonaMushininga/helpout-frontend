@@ -153,11 +153,13 @@ const Header = ({ handleOpen, handleRemove, openClass }) => {
                                                 </li>
                                             </>
                                         ) : (
-                                            <li>
+
+                                            isAuth === true ? (<li>
                                                 <Link legacyBehavior href="/page-applications">
                                                     <a>My Applications </a>
                                                 </Link>
-                                            </li>
+                                            </li>) : (<></>)
+
                                         )
                                     }
 
